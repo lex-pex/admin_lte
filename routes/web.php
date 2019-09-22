@@ -85,3 +85,7 @@ Route::delete('/ad/{ad}', 'AdController@destroy')->name('adDelete');
 
 
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
