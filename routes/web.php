@@ -26,66 +26,28 @@ Route::group(['prefix' => '/admin'], function () {
 
 });
 
-/*
-
-'magazine / create'        => 'magazine/MagazineController/create',     // get    | create  (1)
-'magazine / store'         => 'magazine/MagazineController/store',      // post   | store   (2)
-
-'magazine / {id}/edit'     => 'magazine/MagazineController/edit',       // post   | edit    (3)
-'magazine / update'        => 'magazine/MagazineController/update',     // post   | update  (4)
-
-'magazine / destroy'       => 'magazine/MagazineController/destroy',    // delete | destroy (5)
-
-'magazine / list'          => 'magazine/MagazineController/list',       // get    | list    (6)
-'magazine / list/page/{n}' => 'magazine/MagazineController/list',       // get    | pager   (7)
-
-'magazine / {id}'          => 'magazine/MagazineController/show',       // get    | show    (8)
-
-
-// Such route has to be last cause token parameter  takes away any other URI segments
-
-                       ------- REST API -------
- | GET 	       /photos 	              index      photos. index      | 1
- | GET 	       /photos/create 	      create 	 photos. create     | 2
- | POST        /photos 	              store      photos. store      | 3
- | GET 	       /photos/{photo} 	      show       photos. show       | 4
- | GET 	       /photos/{photo}/edit   edit       photos. edit       | 5
- | PUT/PATCH   /photos/{photo} 	      update 	 photos. update     | 6
- | DELETE      /photos/{photo} 	      destroy 	 photos. destroy    | 7
-
-
-Route::get('/ad/create', 'AdAddController@create')->name('adCreate');
-Route::post('/ad', 'AdAddController@store')->name('adStore');
-Route::get('/ad/{id}/edit', 'AdController@edit')->name('adEdit');
-Route::post('/ad/{ad}', 'AdController@update')->name('adUpdate');
-Route::delete('/ad/{ad}', 'AdController@destroy')->name('adDelete');
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/faker', function () {
+
+//    require_once '../vendor/autoload.php';
+
+    $faker = Faker\Factory::create();
+
+    // image, name, phone, email, position, salary, head, hire_date
+
+    for ($i = 0; $i < 20; $i++) {
+        echo $faker->name . ' _|_ '
+            . $faker->tollFreePhoneNumber . ' _|_ '
+            . $faker->email . ' _|_ '
+            . random_int ( 1 , 10 ) . ' _|_ '  // position
+            . random_int ( 20000 , 500000 ) . ' _|_ '  // salary
+            . random_int ( 1 , 1000 ) . ' _|_ '  // head
+            . $faker->date('Y-m-d', 'now') . ' _|_ '  // hire_date YYYY-MM-DD
+            . ' <br/>';
+    }
+
+});

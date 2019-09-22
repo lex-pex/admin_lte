@@ -20,7 +20,7 @@ class Employees extends Migration
 
             $table->bigIncrements('id');
 
-            $table->string('image', 250);
+            $table->string('image', 250)->nullable();
             $table->string('name', 250);
             $table->string('phone', 15);
             $table->string('email', 120);
