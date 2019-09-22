@@ -30,24 +30,3 @@ Route::group(['prefix' => '/admin'], function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/faker', function () {
-
-//    require_once '../vendor/autoload.php';
-
-    $faker = Faker\Factory::create();
-
-    // image, name, phone, email, position, salary, head, hire_date
-
-    for ($i = 0; $i < 20; $i++) {
-        echo $faker->name . ' _|_ '
-            . $faker->tollFreePhoneNumber . ' _|_ '
-            . $faker->email . ' _|_ '
-            . random_int ( 1 , 10 ) . ' _|_ '  // position
-            . random_int ( 20000 , 500000 ) . ' _|_ '  // salary
-            . random_int ( 1 , 1000 ) . ' _|_ '  // head
-            . $faker->date('Y-m-d', 'now') . ' _|_ '  // hire_date YYYY-MM-DD
-            . ' <br/>';
-    }
-
-});
