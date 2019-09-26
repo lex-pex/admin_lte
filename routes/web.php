@@ -13,6 +13,8 @@ Route::group(['prefix' => '/admin'], function () {
     Route::get('/', 'Admin\AdminController@index');
 //  ____________________________________________________________
 
+    Route::get('/employee/index', 'Admin\EmployeeController@index')->name('data-tables');
+
     Route::get('/employee/create', 'Admin\EmployeeController@create')->name('createEmployee');
     Route::post('/employee/store', 'Admin\EmployeeController@store')->name('storeEmployee');
 
@@ -26,6 +28,11 @@ Route::group(['prefix' => '/admin'], function () {
 
 });
 
+// Route::get('data_tables', function () { return view('admin.examples.table'); });
+
+Route::resource('table', 'Admin\TableController');
+
+Route::resource('positions', 'Test\PositionController');
 
 Auth::routes();
 
