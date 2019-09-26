@@ -16,7 +16,7 @@ class TableController extends Controller
     public function index(Request $request)
     {
 //        $employees = Employee::latest()->get();
-        $employees = Employee::all()->sortByDesc('id');
+        $employees = Employee::all()->load('post')->sortByDesc('id');
 
         if($request->ajax()) {
             return datatables()->of($employees)
@@ -73,7 +73,6 @@ class TableController extends Controller
      */
     public function edit($id)
     {
-        dd('EDIT');
         //
     }
 

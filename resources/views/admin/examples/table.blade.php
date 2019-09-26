@@ -17,17 +17,9 @@
     <h3> Employees Data Table </h3>
     <table class="table table-bordered" id="data-table">
         <thead>
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Email</th>
-            <th>Position</th>
-            <th>Salary</th>
-            <th>Head</th>
-            <th>Hire</th>
-            <th>Action</th>
-        </tr>
+            <tr>
+                <th>Image</th><th>Name</th><th>Phone</th><th>Email</th><th>Position</th><th>Salary</th><th>Head</th><th>Hire</th><th>Action</th>
+            </tr>
         </thead>
     </table>
 </div>
@@ -53,7 +45,7 @@ $(document).ready(function () {
                 {data: 'name', name: 'name'},
                 {data: 'phone', name: 'phone'},
                 {data: 'email', name: 'email'},
-                {data: 'position', name: 'position'},
+                {data: 'post.name', name: 'post.name'},
                 {data: 'salary', name: 'salary'},
                 {data: 'head', name: 'head'},
                 {data: 'hire_date', name: 'hire_date'},
@@ -81,7 +73,6 @@ $(document).ready(function () {
         });
     });
 });
-
 function deleteEmployee(id, name) {
     var frame = $('#confirm-modal');
     frame.attr('data-id', id);

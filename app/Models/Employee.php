@@ -15,4 +15,9 @@ class Employee extends Model
         'image', 'name', 'phone', 'email', 'position', 'salary', 'head', 'hire_date'
     ];
 
+    public function post()
+    {
+        return $this->hasOne('App\Models\Position', 'id', 'position');
+    }
+
 }

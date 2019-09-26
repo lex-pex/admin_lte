@@ -14,4 +14,9 @@ class Position extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function employee()
+    {
+        return $this->belongsTo('App\Models\Employee');
+    }
 }
