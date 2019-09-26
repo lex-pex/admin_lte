@@ -1,9 +1,7 @@
 <?php
 
-/*
-| Web routes are loaded by the RouteServiceProvider within
-| a group which contains the "web" middleware group
-*/
+/* Web routes are loaded by the RouteServiceProvider within
+ a group which contains the "web" middleware group */
 
 Route::get('/', function () { return view('welcome'); });
 
@@ -27,8 +25,6 @@ Route::group(['prefix' => '/admin'], function () {
     Route::get('/employee/{id}', 'Admin\EmployeeController@show')->name('showEmployee');
 
 });
-
-// Route::get('data_tables', function () { return view('admin.examples.table'); });
 
 Route::resource('table', 'Admin\TableController');
 

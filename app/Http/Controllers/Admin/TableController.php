@@ -15,14 +15,16 @@ class TableController extends Controller
      */
     public function index(Request $request)
     {
-        $employees = Employee::latest()->get();
+//        $employees = Employee::latest()->get();
+        $employees = Employee::all()->sortByDesc('id');
+
         if($request->ajax()) {
             return datatables()->of($employees)
                 ->addColumn('action', function($data) {
                     $button =
-                        '<a name="edit" id="' . $data->id . '" class="edit btn btn-outline-primary btn-sm">Edit</a>';
+                        '<p name="edit" id="' . $data->id . '" class="edit btn btn-outline-primary btn-sm">Edit</p>';
                     $button .=
-                        ' <a name="delete" id="'. $data->id .'" class="delete btn btn-outline-danger btn-sm">Delete</a>';
+                        ' <p onclick="deleteEmployee(' . $data->id . ', \'' . $data->name . '\')" class="delete btn btn-outline-danger btn-sm">Delete</p>';
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -95,6 +97,18 @@ class TableController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $e = Employee::findOrFail($id);
+        $e->delete();
     }
 }
+
+
+
+
+
+
+
+
+
+
+
