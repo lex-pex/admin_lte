@@ -6,7 +6,7 @@ use App\Models\Employee;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class TableController extends Controller
+class StaffController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,21 +15,20 @@ class TableController extends Controller
      */
     public function index(Request $request)
     {
-//        $employees = Employee::latest()->get();
         $employees = Employee::all()->load('post')->sortByDesc('id');
         if($request->ajax()) {
             return datatables()->of($employees)
                 ->addColumn('action', function($data) {
                     $button =
-                        '<p name="edit" id="' . $data->id . '" class="edit btn btn-outline-primary btn-sm">Edit</p>';
+                        '<a target="_parent" href="/staff/'. $data->id .'/edit" class="edit btn btn-outline-primary btn-sm"> &nbsp; Edit &nbsp; </a><hr/>';
                     $button .=
-                        ' <p onclick="deleteEmployee(' . $data->id . ', \'' . $data->name . '\')" class="delete btn btn-outline-danger btn-sm">Delete</p>';
+                        ' <span onclick="deleteEmployee(' . $data->id . ', \'' . $data->name . '\')" class="delete btn btn-outline-danger btn-sm">Delete</span>';
                     return $button;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        return view('admin.examples.table');
+        return view('admin.employees.staff_table')->withPageHeader('Employees')->withDescription('Staff List');
     }
 
     /**
@@ -39,7 +38,7 @@ class TableController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.employees.add')->withPageHeader('Employees')->withDescription('Add a New Employee');
     }
 
     /**
@@ -50,7 +49,7 @@ class TableController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd('Staff . Store ');
     }
 
     /**
@@ -61,7 +60,7 @@ class TableController extends Controller
      */
     public function show($id)
     {
-        //
+        dd('Staff . Show ');
     }
 
     /**
@@ -72,7 +71,12 @@ class TableController extends Controller
      */
     public function edit($id)
     {
-        //
+        if(!is_numeric($id)) abort(404);
+        if(!$item = Employee::find($id)) abort(404);
+        return view('admin.employees.edit',
+            [
+                'item' => $item
+            ])->withPageHeader('Employee')->withDescription('Edit');
     }
 
     /**
@@ -84,7 +88,7 @@ class TableController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd('Staff . Update ');
     }
 
     /**
@@ -99,14 +103,3 @@ class TableController extends Controller
         $e->delete();
     }
 }
-
-
-
-
-
-
-
-
-
-
-

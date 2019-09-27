@@ -10,13 +10,11 @@ use App\Http\Controllers\Controller;
 class EmployeeController extends Controller
 {
     public function index() {
-
 //        $e = Employee::find(100);
 //        $e = Employee::with( 'position' ) -> where('id', 100) -> get();
 //        $e->load('post');
-
-        $e = Employee::all()->where('id', '<', 5)->load('post');
-        dd($e);
+//        $e = Employee::all()->where('id', '<', 5)->load('post');
+//        dd($e);
 //        return view('admin.examples.table');
     }
 

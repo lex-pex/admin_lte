@@ -5,12 +5,21 @@
 
 Route::get('/', function () { return view('welcome'); });
 
-Route::group(['prefix' => '/admin'], function () {
-    Route::get('/demo', 'Admin\AdminController@demo');
-    Route::get('/login', 'Admin\AdminController@login');
-    Route::get('/', 'Admin\AdminController@index');
-//  ____________________________________________________________
+/**
+ * Data-table of Employees
+ */
+Route::resource('staff', 'Admin\StaffController');
 
+Route::group(['prefix' => '/admin'], function () {
+
+              // Staff List (AdminLTE-Bootstrap Data-Table-Ajax-jq)
+    Route::get('/', 'Admin\AdminController@index');
+              // AdminLTE elements demo page
+    Route::get('/demo', 'Admin\AdminController@demo');
+              // Admin Login Dialog
+    Route::get('/login', 'Admin\AdminController@login');
+
+              // Hand-Made REST-full routes for employee controller
     Route::get('/employee/index', 'Admin\EmployeeController@index')->name('data-tables');
 
     Route::get('/employee/create', 'Admin\EmployeeController@create')->name('createEmployee');
@@ -23,13 +32,16 @@ Route::group(['prefix' => '/admin'], function () {
 
     Route::get('/employee/list', 'Admin\EmployeeController@list')->name('listEmployee');
     Route::get('/employee/{id}', 'Admin\EmployeeController@show')->name('showEmployee');
-
 });
 
+/**
+ * Examples Ajax Data-Tables
+ */
 Route::resource('table', 'Admin\TableController');
-
 Route::resource('positions', 'Test\PositionController');
 
+/**
+ * Authentication
+ */
 Auth::routes();
-
 Route::get('/home', 'HomeController@index')->name('home');

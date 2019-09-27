@@ -6,7 +6,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">{{ $description }}</h3>
             </div>
-            <form role="form" method="post" action="{{ route('storeEmployee') }}" enctype="multipart/form-data">
+            <form role="form" method="post" action="{{ route('staff.store') }}" enctype="multipart/form-data">
                 <div class="box-body">
                     <div class="form-group">
                         <label for="image">Photo</label>
@@ -54,6 +54,7 @@
                 <div class="box-footer">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
+                @csrf
             </form>
         </div>
     </div>

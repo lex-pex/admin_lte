@@ -12,7 +12,6 @@
     <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 </head>
 <body>
-@include('admin.examples.delete')
 <div class="container pt-3">
     <h3> Employees Data Table </h3>
     <table class="table table-bordered" id="data-table">
@@ -23,8 +22,12 @@
         </thead>
     </table>
 </div>
-<div class="footer" style="height: 75px; width: 100%"></div>
-<script src="{{ asset('js/ap.js') }}"></script>
+<footer class="footer bg-dark">
+    <div class="container text-center p-3 mt-2">
+        <span class="text-muted">Datatables and AdminLte Example</span>
+    </div>
+</footer>
+@include('admin.examples.delete')
 <script>
 $(document).ready(function () {
     $('#data-table')
