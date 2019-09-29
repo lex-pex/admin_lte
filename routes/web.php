@@ -8,6 +8,7 @@ Route::get('/', function () { return view('welcome'); });
 /**
  * Data-table of Employees
  */
+Route::post('staff/hint', 'Admin\StaffController@hint');
 Route::resource('staff', 'Admin\StaffController');
 
 Route::group(['prefix' => '/admin'], function () {

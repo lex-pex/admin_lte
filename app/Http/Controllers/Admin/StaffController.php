@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Employee;
+use App\Models\Position;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -22,7 +23,7 @@ class StaffController extends Controller
                     $button =
                         '<a target="_parent" href="/staff/'. $data->id .'/edit" class="edit btn btn-outline-primary btn-sm"> &nbsp; Edit &nbsp; </a><hr/>';
                     $button .=
-                        ' <span onclick="deleteEmployee(' . $data->id . ', \'' . $data->name . '\')" class="delete btn btn-outline-danger btn-sm">Delete</span>';
+                        '<span onclick="deleteEmployee(' . $data->id . ', \'' . $data->name . '\')" class="delete btn btn-outline-danger btn-sm">Delete</span>';
                     return $button;
                 })
                 ->rawColumns(['action'])
@@ -38,7 +39,12 @@ class StaffController extends Controller
      */
     public function create()
     {
-        return view('admin.employees.add')->withPageHeader('Employees')->withDescription('Add a New Employee');
+        $positions = Position::all();
+        return view('admin.employees.add',
+            [
+                'positions' => $positions
+            ]
+        )->withPageHeader('Employees')->withDescription('Add a New Employee');
     }
 
     /**
@@ -49,7 +55,26 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-        dd('Staff . Store ');
+//          'image', 'name', 'phone', 'email', 'position', 'salary', 'head', 'hire_date'
+
+        $this->validate($request, [
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' => 'required|min:3|max:250',
+            'phone' => 'required|min:50|max:500',
+            'email' => 'required|min:50|max:500',
+            'position' => 'required|min:1|max:10',
+            'salary' => 'required|min:1000|max:1200000',
+            'salary' => 'required|min:1000|max:1200000',
+        ]);
+        $data = $request->except('_token', 'image');
+        $ad = new Ad();
+        $ad->fill($data);
+        $ad->user_id = Auth::user()->id;
+        if ($file = $request->image) {
+            $this->imageSave($file, $ad);
+        }
+        $ad->save();
+        return redirect(route('adShow', $ad->id));
     }
 
     /**
@@ -102,4 +127,19 @@ class StaffController extends Controller
         $e = Employee::findOrFail($id);
         $e->delete();
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @return string
+     */
+    public function hint()
+    {
+//        echo 'hint ' . $_POST['str'];
+
+        echo ['First Name', 'Second Name', 'Third Name'];
+
+        return;
+    }
+
 }

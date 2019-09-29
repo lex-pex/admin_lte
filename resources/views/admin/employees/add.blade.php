@@ -31,20 +31,24 @@
                     <div class="form-group">
                         <label>Position</label>
                         <select class="form-control select">
-                            <option>Leading specialist of the Control Department</option>
-                            <option>IT Development Departament</option>
-                            <option>Sales Management Unit</option>
-                            <option>Reception and Facilities Block</option>
-                            <option>Design and UI Department</option>
+                            @foreach($positions as $p)
+                            <option value="{{ $p->id }}">{{ $p->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="salary">Salary, $</label>
                         <input type="text" class="form-control" id="salary" placeholder="500,000">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group hinted">
                         <label for="head">Head</label>
                         <input type="text" class="form-control" id="head" placeholder="Superior's Name">
+                        <div class="hint-content">
+                            <p>Hello World!</p>
+                            <p>Hello World!</p>
+                            <p>Hello World!</p>
+                            <p>Hello World!</p>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="date">Date of Employment</label>
