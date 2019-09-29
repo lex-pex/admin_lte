@@ -6,9 +6,17 @@ use App\Models\Employee;
 use App\Models\Position;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File;
 
 class StaffController extends Controller
 {
+    /**
+     * Folder Path for store images
+     * @var string
+     */
+    private $folder = 'img/staff';
+
     /**
      * Display a listing of the resource.
      *
@@ -55,26 +63,32 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-//          'image', 'name', 'phone', 'email', 'position', 'salary', 'head', 'hire_date'
-
         $this->validate($request, [
             'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'name' => 'required|min:3|max:250',
-            'phone' => 'required|min:50|max:500',
-            'email' => 'required|min:50|max:500',
+            'name' => 'required|min:3|max:150',
+            'phone' => 'required|min:9|max:20',
+            'email' => 'required|min:10|max:150',
             'position' => 'required|min:1|max:10',
-            'salary' => 'required|min:1000|max:1200000',
-            'salary' => 'required|min:1000|max:1200000',
+            'salary' => 'integer|min:1000|max:1200000',
+            'hire_date' => 'required|date',
         ]);
-        $data = $request->except('_token', 'image');
-        $ad = new Ad();
-        $ad->fill($data);
-        $ad->user_id = Auth::user()->id;
-        if ($file = $request->image) {
-            $this->imageSave($file, $ad);
+        $head = $request->head;
+        if($head == 0) {
+            $employee = Employee::where('name', $request->head_name)->first();
+            if($employee)
+                $head = $employee->id;
+            else
+                redirect()->back()->withErrors('There is not such Employee');
         }
-        $ad->save();
-        return redirect(route('adShow', $ad->id));
+        $data = $request->except('_token', 'image');
+        $e = new Employee();
+        $e->fill($data);
+        $e->head = $head;
+        if ($file = $request->image) {
+            $this->imageSave($file, $e);
+        }
+        $e->save();
+        return redirect(route('staff.show', $e->id));
     }
 
     /**
@@ -85,7 +99,14 @@ class StaffController extends Controller
      */
     public function show($id)
     {
-        dd('Staff . Show ');
+        if(!$item = Employee::find($id)->load('post')) abort(404);
+        $head = Employee::find($item->head);
+        return view('admin.employees.show',
+            [
+                'item' => $item,
+                'head' => $head,
+            ]
+        )->withPageHeader('Employees')->withDescription('Employee Card');
     }
 
     /**
@@ -135,11 +156,23 @@ class StaffController extends Controller
      */
     public function hint()
     {
-//        echo 'hint ' . $_POST['str'];
-
-        echo ['First Name', 'Second Name', 'Third Name'];
-
+        echo Employee::select('id', 'name')->limit(15)->where('name', 'like', $_POST['x'] . '%')->get()->toJson();
         return;
+    }
+
+    // _________ Private Helpers: _________
+
+    private function imageSave(UploadedFile $file, Employee $e) {
+        if($p = $e->image)
+            $this->imageDelete($p);
+        $dateName = date('dmyHis');
+        $name = $dateName . '.' . $file->getClientOriginalExtension();
+        $file->move($this->folder, $name);
+        $e->image = "/$this->folder/$name";
+    }
+
+    private function imageDelete(string $path) {
+        File::delete(trim($path, '/'));
     }
 
 }

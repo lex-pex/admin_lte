@@ -11,13 +11,12 @@
                     <div class="form-group">
                         <label for="image">Photo</label>
                         <div style="width: 300px; padding: 10px">
-                            <img src="/img/staff/avatar.jpg" width="300px" />
+                            <img src="{{ $item->image ? $item->image : '/img/staff/avatar.jpg' }}" width="300px" />
                         </div>
                         <button id="image" class="btn btn-default" style="display:block; width:250px"
                                     onclick="event.preventDefault();
                                         document.getElementById('photo').click();">Browse</button>
                         <input style="display: none" name="image" type="file" id="photo">
-                        {{--<p class="help-block">Example block-level help text here.</p>--}}
                     </div>
                     <div class="form-group">
                         <label for="name">Name</label>

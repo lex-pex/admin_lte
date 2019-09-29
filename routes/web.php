@@ -8,6 +8,7 @@ Route::get('/', function () { return view('welcome'); });
 /**
  * Data-table of Employees
  */
+Route::get('staff/hint_test', 'Admin\StaffController@hint_test');
 Route::post('staff/hint', 'Admin\StaffController@hint');
 Route::resource('staff', 'Admin\StaffController');
 

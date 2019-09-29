@@ -10,36 +10,36 @@
                     <div class="form-group">
                         <label for="image">Photo</label>
                         <div style="width:300px; padding: 10px">
-                            <img src="/img/staff/avatar.jpg" width="300px" />
+                            <img src="{{ $item->image ? $item->image : '/img/staff/avatar.jpg' }}" width="300px" />
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <p id="name">John Doe</p>
+                        <p id="name">{{ $item->name }}</p>
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <p id="phone">+38 (012) 456 78 90</p>
+                        <p id="phone">{{ $item->phone }}</p>
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <p id="email">john.doe@mail.com</p>
+                        <p id="email">{{ $item->email }}</p>
                     </div>
                     <div class="form-group">
                         <label>Position</label>
-                        <p id="position">IT Development Department</p>
+                        <p id="position">{{ $item->post->name }}</p>
                     </div>
                     <div class="form-group">
                         <label for="salary">Salary, $</label>
-                        <p id="salary">500,000</p>
+                        <p id="salary">{{ $item->salary }}</p>
                     </div>
                     <div class="form-group">
                         <label for="head">Head</label>
-                        <p id="head">Superior's Name</p>
+                        <p id="head">{{ $head->name }}</p>
                     </div>
                     <div class="form-group">
                         <label for="date">Date of Employment</label>
-                        <p id="date">2019-07-01</p>
+                        <p id="date">{{ $item->hire_date }}</p>
                     </div>
                 </div>
                 <div class="box-footer">

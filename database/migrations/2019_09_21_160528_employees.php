@@ -22,7 +22,7 @@ class Employees extends Migration
 
             $table->string('image', 250)->nullable();
             $table->string('name', 250);
-            $table->string('phone', 15);
+            $table->string('phone', 20);
             $table->string('email', 120);
             $table->bigInteger('position');
             $table->integer('salary');

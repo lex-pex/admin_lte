@@ -8,51 +8,56 @@
             </div>
             <form role="form" method="post" action="{{ route('staff.store') }}" enctype="multipart/form-data">
                 <div class="box-body">
+                    @if(count($errors) > 0)
+                        <div style="color:firebrick">
+                            ПОЛЯ ЗАПОЛНЕНЫ НЕ ВЕРНО:
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <div class="form-group">
                         <label for="image">Photo</label>
                         <button id="image" class="btn btn-default" style="display: block; width: 250px"
                                     onclick="event.preventDefault();
                                         document.getElementById('photo').click();">Browse</button>
-                        <input style="display: none" name="image" type="file" id="photo">
-                        {{--<p class="help-block">Example block-level help text here.</p>--}}
+                        <input style="display:none" name="image" type="file" id="photo">
                     </div>
                     <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" placeholder="Enter Name">
+                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" placeholder="Enter Name">
                     </div>
                     <div class="form-group">
                         <label for="phone">Phone</label>
-                        <input type="text" class="form-control" id="phone" placeholder="+38 (___) ___ __ __">
+                        <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}" placeholder="+38 (___) ___ __ __">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="Enter Email">
+                        <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" placeholder="Enter Email">
                     </div>
                     <div class="form-group">
                         <label>Position</label>
-                        <select class="form-control select">
+                        <select class="form-control select" name="position">
                             @foreach($positions as $p)
-                            <option value="{{ $p->id }}">{{ $p->name }}</option>
+                            <option {{ old('position') == $p->id ? 'selected' : '' }} value="{{ $p->id }}">{{ $p->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="salary">Salary, $</label>
-                        <input type="text" class="form-control" id="salary" placeholder="500,000">
+                        <input type="text" class="form-control" id="salary" name="salary" value="{{ old('salary') }}" placeholder="500,000">
                     </div>
                     <div class="form-group hinted">
                         <label for="head">Head</label>
-                        <input type="text" class="form-control" id="head" placeholder="Superior's Name">
-                        <div class="hint-content">
-                            <p>Hello World!</p>
-                            <p>Hello World!</p>
-                            <p>Hello World!</p>
-                            <p>Hello World!</p>
-                        </div>
+                        <input type="text" class="form-control" id="head" name="head_name" value="{{ old('head_name') }}" placeholder="Superior's Name">
+                        <input type="hidden" class="form-control" name="head" value="0" />
+                        <div class="hint-content"></div>
                     </div>
                     <div class="form-group">
                         <label for="date">Date of Employment</label>
-                        <input type="date" value="2019-07-01" class="form-control" id="date">
+                        <input type="date" class="form-control" id="date" value="{{ old('date') ? old('date') : '2019-09-01' }}" name="hire_date">
                     </div>
                 </div>
                 <div class="box-footer">
