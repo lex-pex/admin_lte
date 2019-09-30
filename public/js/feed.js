@@ -51,4 +51,11 @@ $(document).ready(function () {
         $('input[name="head"]').val(id);
     }
 
+    function deleteEmployee(id, name) {
+        var frame = $('#confirm-modal');
+        frame.attr('data-id', id);
+        frame.modal('show');
+        $('#modal-message').text('Are you sure you want to remove employee: ' + name);
+    }
+
 });

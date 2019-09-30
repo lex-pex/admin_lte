@@ -19,7 +19,7 @@
         </tr>
         </thead>
     </table>
-@include('admin.examples.delete')
+@include('admin.employees.ajax_del')
 <script>
     $(document).ready(function () {
         $('#data-table')
@@ -42,7 +42,7 @@
                     {data: 'email', name: 'email'},
                     {data: 'post.name', name: 'post.name'},
                     {data: 'salary', name: 'salary'},
-                    {data: 'head', name: 'head'},
+                    {data: 'boss', name: 'boss'},
                     {data: 'hire_date', name: 'hire_date'},
                     {data: 'action', name: 'action', orderable: false, searchable: false}
                 ]
@@ -58,14 +58,13 @@
                 },
                 beforeSend: function() {
                     $('#delete_button').text('Deleting...');
-                },
-                success: function(data) {
-                    setTimeout(function(){
-                        $('#confirm-modal').modal('hide');
-                        $('#data-table').DataTable().ajax.reload();
-                    }, 1000);
-                }
+                }/*, success: function(data) {setTimeout(function(){ }, 1000);}
+                 // to skip the redirect glitch, just move it out here */
             });
+            setTimeout(function(){
+                $('#confirm-modal').modal('hide');
+                $('#data-table').DataTable().ajax.reload();
+            }, 1000);
         });
     });
     function deleteEmployee(id, name) {

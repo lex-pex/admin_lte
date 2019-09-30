@@ -23,10 +23,16 @@
                         <div style="width:300px; padding:10px">
                             <img src="{{ $item->image ? $item->image : '/img/staff/avatar.jpg' }}" width="300px" />
                         </div>
-                        <button id="image" class="btn btn-default" style="display:block;width:250px"
-                                    onclick="event.preventDefault();
-                                        document.getElementById('photo').click();">Browse</button>
+                        <button id="image" class="btn btn-default" style="display:block;width:250px" onclick="event.preventDefault();document.getElementById('photo').click();">Browse</button>
                         <input style="display:none" name="image" type="file" id="photo">
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-md-6 offset-md-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="image_del" id="image_del" {{ old('image_del') ? 'checked' : '' }}>
+                                <label class="form-check-label" for="image_del">Delete Image</label>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="name">Name</label>

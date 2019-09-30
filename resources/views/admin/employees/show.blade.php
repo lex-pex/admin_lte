@@ -9,7 +9,7 @@
                 <div class="box-body">
                     <div class="form-group">
                         <label for="image">Photo</label>
-                        <div style="width:300px; padding: 10px">
+                        <div style="width:300px; padding:10px">
                             <img src="{{ $item->image ? $item->image : '/img/staff/avatar.jpg' }}" width="300px" />
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 <div class="box-footer">
-                    <a href="{{ route('editEmployee', 1) }}" type="submit" class="btn btn-primary">Edit</a>
+                    <a href="{{ route('staff.edit', $item->id) }}" type="submit" class="btn btn-primary">Edit</a>
                     <a onclick="event.preventDefault();" href="" type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-default">Delete</a>
                 </div>
             </div>

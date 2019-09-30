@@ -24,9 +24,16 @@ class StaffController extends Controller
      */
     public function index(Request $request)
     {
-        $employees = Employee::all()->load('post')->sortByDesc('id');
+        $employees = Employee::all()->load('boss', 'post')->sortByDesc('id');
+
         if($request->ajax()) {
             return datatables()->of($employees)
+                ->addColumn('name', function($data) {
+                    return '<a target="_parent" href="'. route('staff.show', $data->id) .'">' . $data->name . '</a>';
+                })
+                ->addColumn('boss', function($data) {
+                    return $data->name;
+                })
                 ->addColumn('action', function($data) {
                     $button =
                         '<a target="_parent" href="/staff/'. $data->id .'/edit" class="edit btn btn-outline-primary btn-sm"> &nbsp; Edit &nbsp; </a><hr/>';
@@ -34,7 +41,7 @@ class StaffController extends Controller
                         '<span onclick="deleteEmployee(' . $data->id . ', \'' . $data->name . '\')" class="delete btn btn-outline-danger btn-sm">Delete</span>';
                     return $button;
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['name', 'action'])
                 ->make(true);
         }
         return view('admin.employees.staff_table')->withPageHeader('Employees')->withDescription('Staff List');
@@ -80,7 +87,6 @@ class StaffController extends Controller
             else
                 return redirect()->back()->withErrors('There is not such Employee to make Head');
         }
-
         $data = $request->except('_token', 'image');
         $e = new Employee();
         $e->fill($data);
@@ -100,8 +106,11 @@ class StaffController extends Controller
      */
     public function show($id)
     {
-        if(!$item = Employee::find($id)->load('post')) abort(404);
-        $head = Employee::find($item->head);
+        if(!$item = Employee::find($id)) abort(404);
+        $item->load('post');
+        if(!$head = Employee::find($item->head)) {
+            $head = $item;
+        }
         return view('admin.employees.show',
             [
                 'item' => $item,
@@ -121,7 +130,9 @@ class StaffController extends Controller
         if(!is_numeric($id)) abort(404);
         if(!$item = Employee::find($id)) abort(404);
         $positions = Position::all();
-        $head = Employee::find($item->head);
+        if(!$head = Employee::find($item->head)) {
+            $head = $item;
+        }
         return view('admin.employees.edit',
             [
                 'item' => $item,
@@ -149,27 +160,21 @@ class StaffController extends Controller
             'salary' => 'integer|min:1000|max:1200000',
             'hire_date' => 'required|date',
         ]);
-        $head = $request->head;
-        if($head != $item->head) {
-            if($head == 0) {
-                $employee = Employee::where('name', $request->head_name)->first();
-                if($employee)
-                    $head = $employee->id;
-                else
-                    return redirect()->back()->withErrors('There is not such Employee to make Head');
-            }
-        }
 
+        if($request->head == $item->head)
+            if(!Employee::where('name', $request->head_name)->first())
+                return redirect()->back()->withErrors('There is not such Employee to make Head');
 
         $data = $request->except('_token', 'image');
-        $e = new Employee();
-        $e->fill($data);
-        $e->head = $head;
-        if ($file = $request->image) {
-            $this->imageSave($file, $e);
+        $item->fill($data);
+        if($request->has('image_del')) {
+            $this->imageDelete($item->image);
+            $item->image = null;
+        } elseif ($file = $request->image) {
+            $this->imageSave($file, $item);
         }
-        $e->save();
-        return redirect(route('staff.show', $e->id));
+        $item->save();
+        return redirect(route('staff.show', $item->id));
     }
 
     /**
@@ -182,6 +187,7 @@ class StaffController extends Controller
     {
         $e = Employee::findOrFail($id);
         $e->delete();
+        return redirect(route('admin.index'));
     }
 
     /**
@@ -200,7 +206,7 @@ class StaffController extends Controller
     private function imageSave(UploadedFile $file, Employee $e) {
         if($p = $e->image)
             $this->imageDelete($p);
-        $dateName = date('dmyHis');
+        $dateName = $e->id . date('dmyHis');
         $name = $dateName . '.' . $file->getClientOriginalExtension();
         $file->move($this->folder, $name);
         $e->image = "/$this->folder/$name";

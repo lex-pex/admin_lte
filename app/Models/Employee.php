@@ -20,4 +20,14 @@ class Employee extends Model
         return $this->hasOne('App\Models\Position', 'id', 'position');
     }
 
+    public function boss()
+    {
+        return $this->hasOne('App\Models\Employee', 'id', 'head');
+    }
+
+    public function employees()
+    {
+        return $this->belongsToMany('App\Models\Employee');
+    }
+
 }

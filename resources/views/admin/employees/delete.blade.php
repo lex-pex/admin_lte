@@ -12,7 +12,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Delete</button>
+                    <form action="{{ route('staff.destroy', $item->id) }}" method="post" style="display: inline-block">
+                        @csrf
+                        <input type="hidden" name="_method" value="delete">
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
                 </div>
             </div>
         </div>
