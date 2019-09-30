@@ -14,7 +14,6 @@
   <link rel="stylesheet" href="/adminlte/dist/css/skins/skin-blue.min.css">
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -364,6 +363,7 @@
 <script src="/adminlte/dist/js/pages/dashboard2.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="/adminlte/dist/js/demo.js"></script>
+<!-- Plugin Hinting box for Head Employee field -->
 <script src="/js/feed.js"></script>
 </body>
 </html>

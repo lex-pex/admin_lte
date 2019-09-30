@@ -8,7 +8,7 @@
                     <h4 class="modal-title">Deleting the Employee</h4>
                 </div>
                 <div class="modal-body">
-                    <p>Are you sure you want to remove employee {{ 'Name' }}</p>
+                    <p>Are you sure you want to remove employee {{ $item->name }}</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

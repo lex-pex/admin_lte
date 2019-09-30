@@ -10,7 +10,7 @@
                 <div class="box-body">
                     @if(count($errors) > 0)
                         <div style="color:firebrick">
-                            ПОЛЯ ЗАПОЛНЕНЫ НЕ ВЕРНО:
+                            The fields are filled incorrectly:
                             <ul>
                                 @foreach($errors->all() as $error)
                                     <li>{{ $error }}</li>
@@ -50,8 +50,8 @@
                         <input type="text" class="form-control" id="salary" name="salary" value="{{ old('salary') }}" placeholder="500,000">
                     </div>
                     <div class="form-group hinted">
-                        <label for="head">Head</label>
-                        <input type="text" class="form-control" id="head" name="head_name" value="{{ old('head_name') }}" placeholder="Superior's Name">
+                        <label for="head_name">Head</label>
+                        <input type="text" class="form-control" id="head_name" name="head_name" value="{{ old('head_name') }}" placeholder="Superior's Name" autocomplete="off">
                         <input type="hidden" class="form-control" name="head" value="0" />
                         <div class="hint-content"></div>
                     </div>

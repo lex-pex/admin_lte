@@ -78,8 +78,9 @@ class StaffController extends Controller
             if($employee)
                 $head = $employee->id;
             else
-                redirect()->back()->withErrors('There is not such Employee');
+                return redirect()->back()->withErrors('There is not such Employee to make Head');
         }
+
         $data = $request->except('_token', 'image');
         $e = new Employee();
         $e->fill($data);
@@ -119,9 +120,13 @@ class StaffController extends Controller
     {
         if(!is_numeric($id)) abort(404);
         if(!$item = Employee::find($id)) abort(404);
+        $positions = Position::all();
+        $head = Employee::find($item->head);
         return view('admin.employees.edit',
             [
-                'item' => $item
+                'item' => $item,
+                'positions' => $positions,
+                'head' => $head
             ])->withPageHeader('Employee')->withDescription('Edit');
     }
 
@@ -134,7 +139,37 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd('Staff . Update ');
+        if(!$item = Employee::find($id)) abort(404);
+        $this->validate($request, [
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'name' => 'required|min:3|max:150',
+            'phone' => 'required|min:9|max:20',
+            'email' => 'required|min:10|max:150',
+            'position' => 'required|min:1|max:10',
+            'salary' => 'integer|min:1000|max:1200000',
+            'hire_date' => 'required|date',
+        ]);
+        $head = $request->head;
+        if($head != $item->head) {
+            if($head == 0) {
+                $employee = Employee::where('name', $request->head_name)->first();
+                if($employee)
+                    $head = $employee->id;
+                else
+                    return redirect()->back()->withErrors('There is not such Employee to make Head');
+            }
+        }
+
+
+        $data = $request->except('_token', 'image');
+        $e = new Employee();
+        $e->fill($data);
+        $e->head = $head;
+        if ($file = $request->image) {
+            $this->imageSave($file, $e);
+        }
+        $e->save();
+        return redirect(route('staff.show', $e->id));
     }
 
     /**
