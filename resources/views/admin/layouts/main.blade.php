@@ -144,8 +144,8 @@
                 <img src="/adminlte/dist/img/lexis.png" class="img-circle" alt="User Image">
 
                 <p>
-                  Lexis Pexis - Web Developer
-                  <small>Member since Nov. 2012</small>
+                  Lexis Pexis - Web Dev
+                  <small>Member since Oct. 2019</small>
                 </p>
               </li>
               <!-- Menu Body -->
@@ -169,7 +169,12 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a class="btn btn-default btn-flat"
+                     href="{{ route('logout') }}"
+                     onclick="event.preventDefault();document.getElementById('logout-form').submit();">Sign out</a>
+                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                  </form>
                 </div>
               </li>
             </ul>
@@ -184,7 +189,6 @@
   </header>
   <!-- Left side column. contains the logo and sidebar -->
   <aside class="main-sidebar">
-
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
@@ -211,7 +215,6 @@
         </div>
       </form>
       <!-- /.search form -->
-
       <!-- Sidebar Menu -->
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">HEADER</li>
@@ -234,7 +237,6 @@
     </section>
     <!-- /.sidebar -->
   </aside>
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -320,13 +322,11 @@
       <div class="tab-pane" id="control-sidebar-settings-tab">
         <form method="post">
           <h3 class="control-sidebar-heading">General Settings</h3>
-
           <div class="form-group">
             <label class="control-sidebar-subheading">
               Report panel usage
               <input type="checkbox" class="pull-right" checked>
             </label>
-
             <p>
               Some information about this general settings option
             </p>
@@ -364,6 +364,6 @@
 <!-- AdminLTE for demo purposes -->
 <script src="/adminlte/dist/js/demo.js"></script>
 <!-- Plugin Hinting box for Head Employee field -->
-<script src="/js/feed.js"></script>
+<script src="/js/hint.js"></script>
 </body>
 </html>

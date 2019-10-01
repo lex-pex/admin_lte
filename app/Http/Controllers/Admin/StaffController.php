@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\File;
 
 class StaffController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Folder Path for store images
      * @var string

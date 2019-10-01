@@ -175,6 +175,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Oracle Data_tables Service Providers...
+         */
         Yajra\Datatables\DatatablesServiceProvider::class
 
     ],
@@ -228,6 +231,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
+        /*
+         * Oracle Data_tables Facade Alias...
+         */
         'Datatables' => Yajra\Datatables\Facades\Datatables::class
 
     ],

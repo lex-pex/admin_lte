@@ -16,20 +16,20 @@ Route::resource('staff', 'Admin\StaffController');
 Route::group(['prefix' => '/admin'], function () {
               // Staff List (AdminLTE-Bootstrap Data-Table-Ajax-jq)
     Route::get('/', 'Admin\AdminController@index')->name('admin.index');
-    // Admin Login Dialog
+              // Admin Login Dialog
     Route::get('/login', 'Admin\AdminController@login');
               // AdminLTE elements demo page
     Route::get('/demo', 'Admin\AdminController@demo');
 });
 
 /**
- * Examples Ajax Data-Tables
- */
-Route::resource('table', 'Admin\TableController');
-Route::resource('positions', 'Test\PositionController');
-
-/**
  * Authentication Routes
  */
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+
+/**
+ * Simple Examples Ajax Data-Tables
+ */
+Route::resource('positions', 'Test\PositionController');
+Route::resource('table', 'Admin\TableController');
